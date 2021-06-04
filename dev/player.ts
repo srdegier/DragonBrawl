@@ -1,17 +1,25 @@
 import { GameObject } from "./gameObject.js"
+import { FireboltAbility } from "./fireboltAbility.js"
 
 export class Player extends GameObject {
 
     name: string
     healthPoint: number
     dead: boolean
+    //abilities
+    fireboltAbility: FireboltAbility
+
+    projectiles: [];
+
     // controls
     controlUp: string
     controlDown: string
     controlLeft: string
     controlRight: string
+    // attack controls
+    controlFirebolt: string
     
-    activeControl = []
+    // activeControl = []
 
     constructor(name: string, x: number, y: number, control: string[]) {
         super(x, y)
@@ -23,6 +31,10 @@ export class Player extends GameObject {
         this.controlLeft = control[2]
         this.controlRight = control[3]
 
+        this.projectiles = []
+
+        this.controlFirebolt = control[4]
+
         this.create()
     }
 
@@ -32,6 +44,9 @@ export class Player extends GameObject {
         // Add the event listeners to the window for the keyboard events
         window.addEventListener("keydown",  (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup",    (e: KeyboardEvent) => this.onKeyUp(e))
+
+        // create abilities
+        this.fireboltAbility = new FireboltAbility(this)
 
         this.div = document.createElement("player")
         document.body.appendChild(this.div)
@@ -78,6 +93,11 @@ export class Player extends GameObject {
             case this.controlLeft:
                 // Give the vertical speed a positive value
                 this.horizontalSpeed = -5
+                break
+            // When the "ArrowRight" key is pressed
+            case this.controlFirebolt:
+                // go to fireboltAbility class and do attack
+                this.fireboltAbility.attack()
                 break
         }
     }

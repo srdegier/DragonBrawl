@@ -16,7 +16,7 @@ export class Arena {
         // this.div.style.filter = `hue-rotate(${Math.random() * 360}deg)`
         document.body.appendChild(this.div)
 
-        let controls = [["w","s", "a", "d"], ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]]
+        let controls = [["w","s", "a", "d"], ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"]]
         // insert 2 players
         this.player.push(new Player("p1", 100, 400, controls[0]))
         this.player.push(new Player("p2", 1600, 400, controls[1]))
