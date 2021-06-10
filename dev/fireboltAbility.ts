@@ -4,15 +4,27 @@ import { Player } from "./player.js"
 
 export class FireboltAbility extends Ability {
 
-    private firebolt : Firebolt
+    private firebolt : Firebolt // array?
+    private player : Player // determine which player
 
     constructor(player: Player) {
         super()
+        this.player = player
         console.log('Firebolt ability created')
     }
 
     attack() : void {
         console.log("Firebolt Attack!")
-        this.firebolt = new Firebolt()
+        this.player.addProjectile(new Firebolt(this.player.getPosition()))
     }
+
+    update() : void {
+
+    }
+
+    delete() : void {}
+
+    //cooldownCheck()
+
+    //attackspeedCheck()
 }

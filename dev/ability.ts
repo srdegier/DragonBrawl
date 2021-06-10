@@ -1,5 +1,5 @@
 export class Ability {
-    constructor() {
-        
-    }
+    // constructor() {
+
+    // }
 }

@@ -1,7 +1,8 @@
 import { GameObject } from "./gameObject.js"
 import { FireboltAbility } from "./fireboltAbility.js"
+import { Projectile } from "./projectile.js"
 
-export class Player extends GameObject {
+export class Player extends GameObject { 
 
     name: string
     healthPoint: number
@@ -9,7 +10,7 @@ export class Player extends GameObject {
     //abilities
     fireboltAbility: FireboltAbility
 
-    projectiles: [];
+    //projectiles: [];
 
     // controls
     controlUp: string
@@ -18,8 +19,15 @@ export class Player extends GameObject {
     controlRight: string
     // attack controls
     controlFirebolt: string
+
+    projecticles: Projectile[] = []
     
     // activeControl = []
+
+    addProjectile(projectile: Projectile) : void {
+        this.projecticles.push(projectile)
+        console.log(this.projecticles);
+    }
 
     constructor(name: string, x: number, y: number, control: string[]) {
         super(x, y)
@@ -31,7 +39,7 @@ export class Player extends GameObject {
         this.controlLeft = control[2]
         this.controlRight = control[3]
 
-        this.projectiles = []
+        //this.projectiles = []
 
         this.controlFirebolt = control[4]
 
@@ -66,6 +74,11 @@ export class Player extends GameObject {
         if (this.name == "p2") {
             this.div.style.transform += "scaleX(-1)"
         }
+
+        //update projectiles of player
+
+        //this.fireboltAbility.update
+
     }
 
     // honestly maybe in a Control class?

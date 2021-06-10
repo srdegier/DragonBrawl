@@ -1,20 +1,27 @@
 import { GameObject } from "./gameObject.js";
+import { FireboltAbility } from "./fireboltAbility.js";
 export class Player extends GameObject {
     constructor(name, x, y, control) {
         super(x, y);
-        this.activeControl = [];
+        this.projecticles = [];
         this.name = name;
         this.healthPoint = 5;
         this.controlUp = control[0];
         this.controlDown = control[1];
         this.controlLeft = control[2];
         this.controlRight = control[3];
+        this.controlFirebolt = control[4];
         this.create();
+    }
+    addProjectile(projectile) {
+        this.projecticles.push(projectile);
+        console.log(this.projecticles);
     }
     create() {
         console.log(`${this.name} was created!`);
         window.addEventListener("keydown", (e) => this.onKeyDown(e));
         window.addEventListener("keyup", (e) => this.onKeyUp(e));
+        this.fireboltAbility = new FireboltAbility(this);
         this.div = document.createElement("player");
         document.body.appendChild(this.div);
         this.div.style.transform = `translate(${this.x}px, ${this.y}px)`;
@@ -40,6 +47,9 @@ export class Player extends GameObject {
                 break;
             case this.controlLeft:
                 this.horizontalSpeed = -5;
+                break;
+            case this.controlFirebolt:
+                this.fireboltAbility.attack();
                 break;
         }
     }

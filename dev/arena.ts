@@ -24,9 +24,10 @@ export class Arena {
     }
 
     update() : void  {
-        // update the shark
+        // update the player
         for (const player of this.player) {
             player.update()
+            // console.log(player.projecticles);
         }
        
         // }

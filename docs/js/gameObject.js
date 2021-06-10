@@ -8,5 +8,8 @@ export class GameObject {
     getClientRect() {
         return this.div.getBoundingClientRect();
     }
+    getPosition() {
+        return { x: this.x, y: this.y };
+    }
 }
 //# sourceMappingURL=gameObject.js.map

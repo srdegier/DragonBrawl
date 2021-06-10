@@ -8,7 +8,7 @@ export class Arena {
         console.log('created arena');
         this.div = document.createElement("background");
         document.body.appendChild(this.div);
-        let controls = [["w", "s", "a", "d"], ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]];
+        let controls = [["w", "s", "a", "d"], ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"]];
         this.player.push(new Player("p1", 100, 400, controls[0]));
         this.player.push(new Player("p2", 1600, 400, controls[1]));
     }

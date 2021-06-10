@@ -12,7 +12,7 @@ class Game {
     }
 
     gameLoop() {
-        //TODO: update aquarium
+        //TODO: update arena
         this.arena.update();
         requestAnimationFrame(() => this.gameLoop())
     }

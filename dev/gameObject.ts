@@ -15,4 +15,10 @@ export class GameObject {
     getClientRect() : DOMRect {
         return this.div.getBoundingClientRect();
     }
+
+    getPosition() : any {
+        // console.log(this.x);
+        // console.log(this.y);
+        return {x: this.x, y: this.y};
+    }
 }
