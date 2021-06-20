@@ -5,7 +5,8 @@ export class Arena {
 
     protected div : HTMLElement
     protected player: Player[] = []
-
+    private doomClock:number = 3600
+    private round: number = 1
     constructor() {
         this.create()
     }
@@ -21,9 +22,12 @@ export class Arena {
         document.body.appendChild(this.div)
 
         // timer
-        this.div = document.createElement("timer")
-        document.body.appendChild(this.div)
+        this.div = document.createElement("h1")
 
+        this.div.classList.add("timer");
+
+        document.body.appendChild(this.div)
+        
         let controls = [["w","s", "a", "d", "f"], ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"]]
         // insert 2 players
         this.player.push(new Player("p1", 100, 400, controls[0]))
@@ -34,7 +38,19 @@ export class Arena {
     update() : void  {
         // update the player
         for (const [indexP, player] of this.player.entries()) {
+            // update movement player
             player.update()
+
+            // determine new round and respawn do in function later
+            if(player.healthPoint == 0) {
+                this.round += 1
+                console.log(this.round);
+                for (const player of this.player) {
+                    // console.log(player.name);
+                    player.respawn()
+                }
+            }
+            
             // check colission player
             for (const [index, projectile] of this.player[indexP].projecticles.entries()) {
                 const enemyP = ((indexP == 0) ? 1 : 0); // determine opposing player
@@ -47,6 +63,18 @@ export class Arena {
                     this.player[enemyP].hit()
                 }
             }
+        }
+        // timer
+        //this.timer();
+    }
+
+    private timer() {
+        this.doomClock--
+        let secondsLeft = Math.floor(this.doomClock / 60)
+        document.querySelector('.timer')
+        // console.log(`Only ${secondsLeft} seconds left!`)
+        if(this.doomClock <= 0) {
+            console.log("Doomsday has come!")
         }
     }
 

@@ -5,7 +5,8 @@ import { Projectile } from "./projectile.js"
 export class Player extends GameObject { 
 
     name: string
-    healthPoint: number
+    private healthPoint: number
+    private wins: number = 0
     dead: boolean
     //abilities
     fireboltAbility: FireboltAbility
@@ -59,12 +60,44 @@ export class Player extends GameObject {
         this.setHP(newHP)
     }
 
+    respawn() : void {
+        this.healthPoint = 5 // back 2 full health
+        this.spawn()
+    }
+
+    // not working yet
+    setWin() : void {
+        this.wins += 1;    
+    }
+
+    getWin() : number {
+        return this.wins;
+    }
+
+    private spawn() : void {
+        //determine spawn position by viewwindow
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        // set height for both player
+        this.y = h/2;
+        // beta
+        if (this.name == "p1") {
+            this.x = w/19
+            // p1 position x
+        } else {
+            // p2 position x
+            this.x = w/1.2        
+        }
+    }
+
     create() : void {
 
         // Add the event listeners to the window for the keyboard events
         window.addEventListener("keydown",  (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup",    (e: KeyboardEvent) => this.onKeyUp(e))
 
+        // spawnpoint player
+        this.spawn();
         // create abilities
         this.fireboltAbility = new FireboltAbility(this)   
     }

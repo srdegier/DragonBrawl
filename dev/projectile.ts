@@ -12,7 +12,7 @@ export class Projectile extends GameObject {
         
         // determine projectile direction
         const direction = `${this.lookDirection}` 
-        const newPosition = eval(this.x +direction+ this.horizontalSpeed)
+        const newPosition = eval(this.x +direction+ this.horizontalSpeed) // eval not recommended
         
         this.x = parseInt(newPosition)
         // console.log(this.x);

@@ -47,6 +47,14 @@ border {
     z-index: 2;
 }
 
-timer {
-    
+.timer {
+    position: relative;
+    z-index: 2;
+    background-color: black;
+    margin: auto;
+    width: 5%;
+    border: 1px solid white;
+    padding: 10px;
+    color: red;
+    text-align: center;
 }

@@ -3,6 +3,7 @@ import { FireboltAbility } from "./fireboltAbility.js";
 export class Player extends GameObject {
     constructor(name, x, y, control) {
         super(x, y, 'player', name);
+        this.wins = 0;
         this.projecticles = [];
         this.name = name;
         this.healthPoint = 5;
@@ -31,9 +32,31 @@ export class Player extends GameObject {
         console.log(newHP);
         this.setHP(newHP);
     }
+    respawn() {
+        this.healthPoint = 5;
+        this.spawn();
+    }
+    setWin() {
+        this.wins += 1;
+    }
+    getWin() {
+        return this.wins;
+    }
+    spawn() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        this.y = h / 2;
+        if (this.name == "p1") {
+            this.x = w / 19;
+        }
+        else {
+            this.x = w / 1.2;
+        }
+    }
     create() {
         window.addEventListener("keydown", (e) => this.onKeyDown(e));
         window.addEventListener("keyup", (e) => this.onKeyUp(e));
+        this.spawn();
         this.fireboltAbility = new FireboltAbility(this);
     }
     update() {
