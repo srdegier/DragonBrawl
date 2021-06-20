@@ -10,8 +10,6 @@ export class Player extends GameObject {
     //abilities
     fireboltAbility: FireboltAbility
 
-    //projectiles: [];
-
     // controls
     controlUp: string
     controlDown: string
@@ -21,16 +19,19 @@ export class Player extends GameObject {
     controlFirebolt: string
 
     projecticles: Projectile[] = []
-    
-    // activeControl = []
 
     addProjectile(projectile: Projectile) : void {
         this.projecticles.push(projectile)
         console.log(this.projecticles);
     }
 
+    removeProjectile(index: number) : void {
+        // remove instance from array
+        this.projecticles.splice(index, 1)
+    }
+
     constructor(name: string, x: number, y: number, control: string[]) {
-        super(x, y)
+        super(x, y, 'player', name)
         this.name = name
         this.healthPoint = 5
 
@@ -39,52 +40,64 @@ export class Player extends GameObject {
         this.controlLeft = control[2]
         this.controlRight = control[3]
 
-        //this.projectiles = []
-
         this.controlFirebolt = control[4]
 
         this.create()
     }
 
+    private setHP(newHP: number) : void {
+        this.healthPoint = newHP
+    }
+
+    private getHP() : number {
+        return this.healthPoint;
+    }
+
+    hit() : void {
+        const newHP = this.getHP() - 1
+        console.log(newHP);
+        this.setHP(newHP)
+    }
+
     create() : void {
-        console.log(`${this.name} was created!`)
 
         // Add the event listeners to the window for the keyboard events
         window.addEventListener("keydown",  (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup",    (e: KeyboardEvent) => this.onKeyUp(e))
 
         // create abilities
-        this.fireboltAbility = new FireboltAbility(this)
-
-        this.div = document.createElement("player")
-        document.body.appendChild(this.div)
-
-        this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
-    
+        this.fireboltAbility = new FireboltAbility(this)   
     }
 
     update() : void {
-        // Add the vertical speed to the y-value
+
         this.y += this.verticalSpeed
         this.x += this.horizontalSpeed
-        // Draw the shark on the right coordinate (x, y)
+        // Draw the dragon on the right coordinate (x, y)
+        // if(this.isInViewport()) {
+        //     this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
+        // } else {
+        //     //fix this
+        // }
         this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
 
-        //maybe change 2 create f
         if (this.name == "p2") {
             this.div.style.transform += "scaleX(-1)"
         }
 
         //update projectiles of player
-
-        //this.fireboltAbility.update
-
+        for (const [index, projectile] of this.projecticles.entries()) {
+            projectile.moveForward()
+            if(!projectile.isInViewport()) {
+                // delete HTMLElement
+                projectile.remove();
+                // remove from array
+                this.removeProjectile(index)
+            }
+        }
     }
 
-    // honestly maybe in a Control class?
-
     onKeyDown(e: KeyboardEvent): void {
-        //TODO: add fix to stop propagation in non active class
         // Check if the key in the event (e.key) matches the desired input
         switch (e.key) {
             // When the "ArrowUp" key is pressed

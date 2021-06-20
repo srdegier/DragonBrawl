@@ -15,11 +15,11 @@ export class FireboltAbility extends Ability {
 
     attack() : void {
         console.log("Firebolt Attack!")
-        this.player.addProjectile(new Firebolt(this.player.getPosition()))
+        this.player.addProjectile(new Firebolt(this.player.name, this.player.getPosition()))
     }
 
     update() : void {
-
+        // this.firebolt.update
     }
 
     delete() : void {}

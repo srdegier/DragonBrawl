@@ -1,11 +1,13 @@
 body {
     background-color: #70CF51;
     font-family: Arial, Helvetica, sans-serif;
-    overflow:hidden;
+    overflow-y: unset;
     margin:0px; padding:0px;
+    overflow-y: hidden; 
+    overflow-x: hidden;
 }
 
-fish, bubble, background, player {
+fish, firebolt, background, player {
     position: absolute;
     display: block;
     box-sizing: border-box;
@@ -19,10 +21,32 @@ player {
     /* filter: hue-rotate(90deg); */
 }
 
+firebolt {
+    background-image: url(../assets/firebolt.gif);
+    width: 73px; 
+    height: 25px;
+    /* filter: hue-rotate(90deg); */
+}
+
 background {
 	background-image: url(../images/actionsky.gif);
     width:100%; height: 100%;
     background-size: cover;
     transform: scaleX(-1);
     z-index: 1;
+    /* background: linear-gradient(#000, #000) no-repeat center/2px 100%; */
+}
+
+border {
+    border-left: 1px solid red;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+    z-index: 2;
+}
+
+timer {
+    
 }

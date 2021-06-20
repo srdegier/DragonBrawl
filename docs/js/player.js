@@ -2,7 +2,7 @@ import { GameObject } from "./gameObject.js";
 import { FireboltAbility } from "./fireboltAbility.js";
 export class Player extends GameObject {
     constructor(name, x, y, control) {
-        super(x, y);
+        super(x, y, 'player', name);
         this.projecticles = [];
         this.name = name;
         this.healthPoint = 5;
@@ -17,14 +17,24 @@ export class Player extends GameObject {
         this.projecticles.push(projectile);
         console.log(this.projecticles);
     }
+    removeProjectile(index) {
+        this.projecticles.splice(index, 1);
+    }
+    setHP(newHP) {
+        this.healthPoint = newHP;
+    }
+    getHP() {
+        return this.healthPoint;
+    }
+    hit() {
+        const newHP = this.getHP() - 1;
+        console.log(newHP);
+        this.setHP(newHP);
+    }
     create() {
-        console.log(`${this.name} was created!`);
         window.addEventListener("keydown", (e) => this.onKeyDown(e));
         window.addEventListener("keyup", (e) => this.onKeyUp(e));
         this.fireboltAbility = new FireboltAbility(this);
-        this.div = document.createElement("player");
-        document.body.appendChild(this.div);
-        this.div.style.transform = `translate(${this.x}px, ${this.y}px)`;
     }
     update() {
         this.y += this.verticalSpeed;
@@ -32,6 +42,13 @@ export class Player extends GameObject {
         this.div.style.transform = `translate(${this.x}px, ${this.y}px)`;
         if (this.name == "p2") {
             this.div.style.transform += "scaleX(-1)";
+        }
+        for (const [index, projectile] of this.projecticles.entries()) {
+            projectile.moveForward();
+            if (!projectile.isInViewport()) {
+                projectile.remove();
+                this.removeProjectile(index);
+            }
         }
     }
     onKeyDown(e) {
