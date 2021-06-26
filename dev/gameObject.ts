@@ -43,6 +43,7 @@ export class GameObject {
         return this.div.getBoundingClientRect();
     }
 
+    // goeie manier doen getter setter...
     getPosition() : any {
         return {x: this.x, y: this.y};
     }

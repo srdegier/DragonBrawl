@@ -1,16 +1,24 @@
 import { Ability} from "./ability.js"
 import { Firebolt } from "./firebolt.js"
 import { Player } from "./player.js"
+import { PlayerUI } from "./playerUI.js"
 
 export class FireboltAbility extends Ability {
 
-    private firebolt : Firebolt // array?
+    private firebolt : Firebolt 
+    private fireboltSlot : PlayerUI
     private player : Player // determine which player
 
     constructor(player: Player) {
         super()
         this.player = player
-        console.log('Firebolt ability created')
+        this.create()
+    }
+
+    private create () : void {
+        console.log('create ability')
+        // lmao het is possible
+        //this.player.playerUI.update()
     }
 
     attack() : void {

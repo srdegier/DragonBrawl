@@ -1,13 +1,17 @@
 import { GameObject } from "./gameObject.js"
+import { PlayerUI } from "./playerUI.js"
 import { FireboltAbility } from "./fireboltAbility.js"
 import { Projectile } from "./projectile.js"
 
 export class Player extends GameObject { 
 
     name: string
-    private healthPoint: number
-    private wins: number = 0
+    private _healthPoint: number = 4
+    private _wins: number = 0
     dead: boolean
+    // ui
+    playerUI: PlayerUI
+
     //abilities
     fireboltAbility: FireboltAbility
 
@@ -34,7 +38,7 @@ export class Player extends GameObject {
     constructor(name: string, x: number, y: number, control: string[]) {
         super(x, y, 'player', name)
         this.name = name
-        this.healthPoint = 5
+        // this._healthPoint = 5
 
         this.controlUp = control[0]
         this.controlDown = control[1]
@@ -46,32 +50,44 @@ export class Player extends GameObject {
         this.create()
     }
 
-    private setHP(newHP: number) : void {
-        this.healthPoint = newHP
+    public set healthPoint(newHP: number) {
+        this._healthPoint = newHP;
     }
 
-    private getHP() : number {
-        return this.healthPoint;
+    public get healthPoint() {
+        return this._healthPoint;
     }
 
     hit() : void {
-        const newHP = this.getHP() - 1
-        console.log(newHP);
-        this.setHP(newHP)
+        // set new hp value
+        this.healthPoint = this.healthPoint - 1
+        // remove health of player
+        this.playerUI.removeHealth()
     }
 
+    // maybe delay this in case projectiles are gone
     respawn() : void {
-        this.healthPoint = 5 // back 2 full health
+        // back 2 full health
+        this.healthPoint = 4 
+        // recreate the UI with corresponding new values of player
+        this.playerUI.resetUI()
+        // empty projectiles make function for this if time
+        //this.projecticles = []
+        // respawn the player
         this.spawn()
     }
 
-    // not working yet
-    setWin() : void {
-        this.wins += 1;    
+    public set wins(value: number) {
+        this._wins += value;
+        console.log(this.wins)
     }
 
     getWin() : number {
         return this.wins;
+    }
+
+    public get wins () {
+        return this._wins
     }
 
     private spawn() : void {
@@ -90,7 +106,7 @@ export class Player extends GameObject {
         }
     }
 
-    create() : void {
+    private create() : void {
 
         // Add the event listeners to the window for the keyboard events
         window.addEventListener("keydown",  (e: KeyboardEvent) => this.onKeyDown(e))
@@ -98,8 +114,12 @@ export class Player extends GameObject {
 
         // spawnpoint player
         this.spawn();
+
+        // create player UI
+        this.playerUI = new PlayerUI(this)
+
         // create abilities
-        this.fireboltAbility = new FireboltAbility(this)   
+        this.fireboltAbility = new FireboltAbility(this)
     }
 
     update() : void {
@@ -128,6 +148,7 @@ export class Player extends GameObject {
                 this.removeProjectile(index)
             }
         }
+
     }
 
     onKeyDown(e: KeyboardEvent): void {

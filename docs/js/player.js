@@ -1,12 +1,13 @@
 import { GameObject } from "./gameObject.js";
+import { PlayerUI } from "./playerUI.js";
 import { FireboltAbility } from "./fireboltAbility.js";
 export class Player extends GameObject {
     constructor(name, x, y, control) {
         super(x, y, 'player', name);
-        this.wins = 0;
+        this._healthPoint = 4;
+        this._wins = 0;
         this.projecticles = [];
         this.name = name;
-        this.healthPoint = 5;
         this.controlUp = control[0];
         this.controlDown = control[1];
         this.controlLeft = control[2];
@@ -21,26 +22,30 @@ export class Player extends GameObject {
     removeProjectile(index) {
         this.projecticles.splice(index, 1);
     }
-    setHP(newHP) {
-        this.healthPoint = newHP;
+    set healthPoint(newHP) {
+        this._healthPoint = newHP;
     }
-    getHP() {
-        return this.healthPoint;
+    get healthPoint() {
+        return this._healthPoint;
     }
     hit() {
-        const newHP = this.getHP() - 1;
-        console.log(newHP);
-        this.setHP(newHP);
+        this.healthPoint = this.healthPoint - 1;
+        this.playerUI.removeHealth();
     }
     respawn() {
-        this.healthPoint = 5;
+        this.healthPoint = 4;
+        this.playerUI.resetUI();
         this.spawn();
     }
-    setWin() {
-        this.wins += 1;
+    set wins(value) {
+        this._wins += value;
+        console.log(this.wins);
     }
     getWin() {
         return this.wins;
+    }
+    get wins() {
+        return this._wins;
     }
     spawn() {
         var w = window.innerWidth;
@@ -57,6 +62,7 @@ export class Player extends GameObject {
         window.addEventListener("keydown", (e) => this.onKeyDown(e));
         window.addEventListener("keyup", (e) => this.onKeyUp(e));
         this.spawn();
+        this.playerUI = new PlayerUI(this);
         this.fireboltAbility = new FireboltAbility(this);
     }
     update() {

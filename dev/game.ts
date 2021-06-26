@@ -14,6 +14,9 @@ class Game {
     gameLoop() {
         //TODO: update arena
         this.arena.update();
+        // if(this.arena.round == 5) {
+        //     console.log('game over');
+        // }
         requestAnimationFrame(() => this.gameLoop())
     }
 } 

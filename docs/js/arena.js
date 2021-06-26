@@ -3,7 +3,7 @@ export class Arena {
     constructor() {
         this.player = [];
         this.doomClock = 3600;
-        this.round = 1;
+        this._round = 1;
         this.create();
     }
     create() {
@@ -22,15 +22,16 @@ export class Arena {
     update() {
         for (const [indexP, player] of this.player.entries()) {
             player.update();
+            const enemyP = ((indexP == 0) ? 1 : 0);
             if (player.healthPoint == 0) {
-                this.round += 1;
-                console.log(this.round);
+                this.round = 1;
+                this.player[enemyP].wins = 1;
+                console.log("Round " + this.round);
                 for (const player of this.player) {
                     player.respawn();
                 }
             }
             for (const [index, projectile] of this.player[indexP].projecticles.entries()) {
-                const enemyP = ((indexP == 0) ? 1 : 0);
                 const hit = this.checkCollision(projectile.getClientRect(), this.player[enemyP].getClientRect());
                 if (hit) {
                     this.player[indexP].removeProjectile(index);
@@ -39,6 +40,12 @@ export class Arena {
                 }
             }
         }
+    }
+    set round(value) {
+        this._round += value;
+    }
+    get round() {
+        return this._round;
     }
     timer() {
         this.doomClock--;

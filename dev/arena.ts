@@ -6,7 +6,7 @@ export class Arena {
     protected div : HTMLElement
     protected player: Player[] = []
     private doomClock:number = 3600
-    private round: number = 1
+    private _round: number = 1
     constructor() {
         this.create()
     }
@@ -38,22 +38,23 @@ export class Arena {
     update() : void  {
         // update the player
         for (const [indexP, player] of this.player.entries()) {
-            // update movement player
+            // update player
             player.update()
+
+            const enemyP = ((indexP == 0) ? 1 : 0); // determine opposing player
 
             // determine new round and respawn do in function later
             if(player.healthPoint == 0) {
-                this.round += 1
-                console.log(this.round);
+                this.round = 1
+                this.player[enemyP].wins = 1
+                console.log("Round " + this.round);
                 for (const player of this.player) {
-                    // console.log(player.name);
                     player.respawn()
                 }
             }
             
             // check colission player
             for (const [index, projectile] of this.player[indexP].projecticles.entries()) {
-                const enemyP = ((indexP == 0) ? 1 : 0); // determine opposing player
                 const hit = this.checkCollision(projectile.getClientRect(), this.player[enemyP].getClientRect())
                 if(hit){
                     // remove projectile
@@ -65,7 +66,15 @@ export class Arena {
             }
         }
         // timer
-        //this.timer();
+        // this.timer();
+    }
+
+    public set round (value : number) {
+        this._round += value;
+    }
+
+    public get round () {
+        return this._round
     }
 
     private timer() {

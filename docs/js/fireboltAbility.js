@@ -4,7 +4,10 @@ export class FireboltAbility extends Ability {
     constructor(player) {
         super();
         this.player = player;
-        console.log('Firebolt ability created');
+        this.create();
+    }
+    create() {
+        console.log('create ability');
     }
     attack() {
         console.log("Firebolt Attack!");
