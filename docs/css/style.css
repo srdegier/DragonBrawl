@@ -7,13 +7,33 @@ body {
     overflow-x: hidden;
 }
 
-player-ui, abilities-bar, wincounter, firebolt, background, player, heart{
+player-ui, abilities-bar, wincounter, firebolt, superbolt, background, player, heart{
     position: absolute;
     display: block;
     box-sizing: border-box;
     background-repeat: no-repeat;
     z-index: 2;
     width: 450px;
+}
+
+win-message {
+    z-index: 4;
+    position: absolute;
+    left: 40%;
+    margin: auto;
+    width: 400px;
+    bottom: 60%;
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    border: 2px solid white;
+    display: none;
+}
+
+.visible {
+    display: block!important;
 }
 
 player {
@@ -34,12 +54,60 @@ abilities-bar {
     background: rgba(0,0,0,0.2);
     bottom: 0;
     position: fixed;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    
+}
+
+firebolt-slot {
+    background-image: url(../assets/firebolt.gif);
+    background-repeat: no-repeat;
+    background-position: center;    
+}
+
+superbolt-slot {
+    background-image: url(../assets/superbolt.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;    
+}
+
+.circle {
+    justify-content: center;
+    border: 2px solid white;
+    align-items: center;
+    border-radius: 100%;
+    text-align: center;
+    margin: 5px 20px;
+    font-size: 15px;
+    padding: 15px;
+    display: flex;
+    height: 50px;
+    width: 50px;
+    color: #fff;
+}
+
+.circle span {
+    margin-top: 45px;
+}
+
+.control-text {
+    line-height: 120px;
+}
+
+.cooldown {
+    position: absolute;
+    top: -30px;
+    color: red;
+    font-size: 20px;
 }
 
 healthbar {
     height: 50px;
     float: inherit;
     margin-left: 20px;
+    /* text-align: end!important; */
 }
 wincounter {
     display: inline;
@@ -76,6 +144,13 @@ firebolt {
     /* filter: hue-rotate(90deg); */
 }
 
+superbolt {
+    background-image: url(../assets/superbolt.gif);
+    width: 173px; 
+    height: 125px;
+    /* filter: hue-rotate(90deg); */
+}
+
 background {
 	background-image: url(../images/actionsky.gif);
     width:100%; height: 100%;
@@ -104,7 +179,7 @@ border {
     height: 20px;
     /* border: 1px solid white; */
     padding: 10px;
-    color: red;
+    color: white;
     text-align: center;
 }
 

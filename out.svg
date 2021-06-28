@@ -1,0 +1,162 @@
+<svg version="1.1" baseProfile="full" width="1086.25" height="1015" viewbox="0 0 1086.25 1015" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" style="font-weight:bold; font-size:12pt; font-family:'Calibri', Helvetica, sans-serif;;stroke-width:3;stroke-linejoin:round;stroke-linecap:round">
+<title >nomnoml</title>
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#arrowSize: 1.5
+#.interface: fill=#8f8 dashed[Ability|#cooldown;#currentCooldown|#checkCooldown()]
+[Arena|#div;#player;-doomClock;-_round|+create();+update();-timer();+checkCollision()]
+[Firebolt|+projectileSpeed;+position;+pName|+create();+update()]
+[Projectile]&lt;:-[Firebolt]
+[FireboltAbility|-firebolt;-player|-create();+attack();+update()]
+[Ability]&lt;:-[FireboltAbility]
+[Game|+arena|+gameLoop()]
+[GameObject|#div;#x;#y;#verticalSpeed;#horizontalSpeed;#lookDirection|+isInViewport();+setDirection();+getClientRect();+getPosition()]
+[Player|+name;-_healthPoint;-_wins;+dead;+playerUI;+fireboltAbility;+superboltAbility;+controlUp;+controlDown;+controlLeft;+controlRight;+controlFirebolt;+controlSuperbolt;+projecticles|+addProjectile();+removeProjectile();+hit();+respawn();+getWin();-spawn();-create();+update();+onKeyDown();+onKeyUp()]
+[GameObject]&lt;:-[Player]
+[PlayerUI|-player;-div;-wincounter;-healthbar;+abilitiesBar;+firebolt;+superbolt|-create();-addAbilitiesBar();-addAbilities();-addFirebolt();+fireboltCooldown();-addSuperbolt();+superboltCooldown();-addHealthbar();+resetUI();+addHearts();+removeHealth();-addWinCounter()]
+[Projectile||+moveForward();+remove();+create()]
+[GameObject]&lt;:-[Projectile]
+[Superbolt|+projectileSpeed;+position;+pName|+create();+update()]
+[Projectile]&lt;:-[Superbolt]
+[SuperboltAbility|-superbolt;-player|+attack();+update()]
+[Ability]&lt;:-[SuperboltAbility]</desc>
+<path d="M560.5 663 L479 844.5 L479 864.5 L479 864.5 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<path d="M559.6 684.5 L552.3 681.2 L545 678 L560.5 663 Z" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></path>
+<path d="M879.3 203 L779.3 381.5 L779.3 544 L779.3 544 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<path d="M876.5 224.4 L869.5 220.4 L862.6 216.5 L879.3 203 Z" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></path>
+<path d="M418 294 L370 381.5 L370 401.5 L370 401.5 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<path d="M415.4 315.4 L408.4 311.5 L401.4 307.7 L418 294 Z" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></path>
+<path d="M535 294 L583 381.5 L583 563 L583 563 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<path d="M551.6 307.7 L544.6 311.5 L537.6 315.4 L535 294 Z" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></path>
+<path d="M605.5 663 L687 844.5 L687 864.5 L687 864.5 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<path d="M621 678 L613.7 681.2 L606.4 684.5 L605.5 663 Z" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></path>
+<path d="M896.1 203 L989.8 381.5 L989.8 551.5 L989.8 551.5 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<path d="M912.5 217 L905.4 220.7 L898.3 224.4 L896.1 203 Z" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></path>
+<rect x="13.5" y="96.5" height="183" width="178" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\arena.ts.Arena" xlink:href="dev\arena.ts"><text x="102.5" y="118" style="fill: #33322E;text-anchor: middle;">Arena</text></a>
+<path d="M13.5 127.5 L191.5 127.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="21.5" y="149" style="fill: #33322E;font-weight:normal;">#div</text>
+<text x="21.5" y="164" style="fill: #33322E;font-weight:normal;">#player</text>
+<text x="21.5" y="179" style="fill: #33322E;font-weight:normal;">-doomClock</text>
+<text x="21.5" y="194" style="fill: #33322E;font-weight:normal;">-_round</text>
+<path d="M13.5 203.5 L191.5 203.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="21.5" y="225" style="fill: #33322E;font-weight:normal;">+create()</text>
+<text x="21.5" y="240" style="fill: #33322E;font-weight:normal;">+update()</text>
+<text x="21.5" y="255" style="fill: #33322E;font-weight:normal;">-timer()</text>
+<text x="21.5" y="270" style="fill: #33322E;font-weight:normal;">+checkCollision()</text>
+<rect x="395.5" y="864.5" height="138" width="168" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\firebolt.ts.Firebolt" xlink:href="dev\firebolt.ts"><text x="479.5" y="886" style="fill: #33322E;text-anchor: middle;">Firebolt</text></a>
+<path d="M395.5 895.5 L563.5 895.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="403.5" y="917" style="fill: #33322E;font-weight:normal;">+projectileSpeed</text>
+<text x="403.5" y="932" style="fill: #33322E;font-weight:normal;">+position</text>
+<text x="403.5" y="947" style="fill: #33322E;font-weight:normal;">+pName</text>
+<path d="M395.5 956.5 L563.5 956.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="403.5" y="978" style="fill: #33322E;font-weight:normal;">+create()</text>
+<text x="403.5" y="993" style="fill: #33322E;font-weight:normal;">+update()</text>
+<rect x="699.5" y="544.5" height="138" width="159" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\fireboltAbility.ts.FireboltAbility" xlink:href="dev\fireboltAbility.ts"><text x="779" y="566" style="fill: #33322E;text-anchor: middle;">FireboltAbility</text></a>
+<path d="M699.5 575.5 L858.5 575.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="707.5" y="597" style="fill: #33322E;font-weight:normal;">-firebolt</text>
+<text x="707.5" y="612" style="fill: #33322E;font-weight:normal;">-player</text>
+<path d="M699.5 621.5 L858.5 621.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="707.5" y="643" style="fill: #33322E;font-weight:normal;">-create()</text>
+<text x="707.5" y="658" style="fill: #33322E;font-weight:normal;">+attack()</text>
+<text x="707.5" y="673" style="fill: #33322E;font-weight:normal;">+update()</text>
+<rect x="231.5" y="141.5" height="93" width="121" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\game.ts.Game" xlink:href="dev\game.ts"><text x="292" y="163" style="fill: #33322E;text-anchor: middle;">Game</text></a>
+<path d="M231.5 172.5 L352.5 172.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="239.5" y="194" style="fill: #33322E;font-weight:normal;">+arena</text>
+<path d="M231.5 203.5 L352.5 203.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="239.5" y="225" style="fill: #33322E;font-weight:normal;">+gameLoop()</text>
+<rect x="392.5" y="81.5" height="213" width="168" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\gameObject.ts.GameObject" xlink:href="dev\gameObject.ts"><text x="476.5" y="103" style="fill: #33322E;text-anchor: middle;">GameObject</text></a>
+<path d="M392.5 112.5 L560.5 112.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="400.5" y="134" style="fill: #33322E;font-weight:normal;">#div</text>
+<text x="400.5" y="149" style="fill: #33322E;font-weight:normal;">#x</text>
+<text x="400.5" y="164" style="fill: #33322E;font-weight:normal;">#y</text>
+<text x="400.5" y="179" style="fill: #33322E;font-weight:normal;">#verticalSpeed</text>
+<text x="400.5" y="194" style="fill: #33322E;font-weight:normal;">#horizontalSpeed</text>
+<text x="400.5" y="209" style="fill: #33322E;font-weight:normal;">#lookDirection</text>
+<path d="M392.5 218.5 L560.5 218.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="400.5" y="240" style="fill: #33322E;font-weight:normal;">+isInViewport()</text>
+<text x="400.5" y="255" style="fill: #33322E;font-weight:normal;">+setDirection()</text>
+<text x="400.5" y="270" style="fill: #33322E;font-weight:normal;">+getClientRect()</text>
+<text x="400.5" y="285" style="fill: #33322E;font-weight:normal;">+getPosition()</text>
+<rect x="271.5" y="401.5" height="423" width="197" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\player.ts.Player" xlink:href="dev\player.ts"><text x="370" y="423" style="fill: #33322E;text-anchor: middle;">Player</text></a>
+<path d="M271.5 432.5 L468.5 432.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="279.5" y="454" style="fill: #33322E;font-weight:normal;">+name</text>
+<text x="279.5" y="469" style="fill: #33322E;font-weight:normal;">-_healthPoint</text>
+<text x="279.5" y="484" style="fill: #33322E;font-weight:normal;">-_wins</text>
+<text x="279.5" y="499" style="fill: #33322E;font-weight:normal;">+dead</text>
+<text x="279.5" y="514" style="fill: #33322E;font-weight:normal;">+playerUI</text>
+<text x="279.5" y="529" style="fill: #33322E;font-weight:normal;">+fireboltAbility</text>
+<text x="279.5" y="544" style="fill: #33322E;font-weight:normal;">+superboltAbility</text>
+<text x="279.5" y="559" style="fill: #33322E;font-weight:normal;">+controlUp</text>
+<text x="279.5" y="574" style="fill: #33322E;font-weight:normal;">+controlDown</text>
+<text x="279.5" y="589" style="fill: #33322E;font-weight:normal;">+controlLeft</text>
+<text x="279.5" y="604" style="fill: #33322E;font-weight:normal;">+controlRight</text>
+<text x="279.5" y="619" style="fill: #33322E;font-weight:normal;">+controlFirebolt</text>
+<text x="279.5" y="634" style="fill: #33322E;font-weight:normal;">+controlSuperbolt</text>
+<text x="279.5" y="649" style="fill: #33322E;font-weight:normal;">+projecticles</text>
+<path d="M271.5 658.5 L468.5 658.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="279.5" y="680" style="fill: #33322E;font-weight:normal;">+addProjectile()</text>
+<text x="279.5" y="695" style="fill: #33322E;font-weight:normal;">+removeProjectile()</text>
+<text x="279.5" y="710" style="fill: #33322E;font-weight:normal;">+hit()</text>
+<text x="279.5" y="725" style="fill: #33322E;font-weight:normal;">+respawn()</text>
+<text x="279.5" y="740" style="fill: #33322E;font-weight:normal;">+getWin()</text>
+<text x="279.5" y="755" style="fill: #33322E;font-weight:normal;">-spawn()</text>
+<text x="279.5" y="770" style="fill: #33322E;font-weight:normal;">-create()</text>
+<text x="279.5" y="785" style="fill: #33322E;font-weight:normal;">+update()</text>
+<text x="279.5" y="800" style="fill: #33322E;font-weight:normal;">+onKeyDown()</text>
+<text x="279.5" y="815" style="fill: #33322E;font-weight:normal;">+onKeyUp()</text>
+<rect x="600.5" y="13.5" height="348" width="206" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\playerUI.ts.PlayerUI" xlink:href="dev\playerUI.ts"><text x="703.5" y="35" style="fill: #33322E;text-anchor: middle;">PlayerUI</text></a>
+<path d="M600.5 44.5 L806.5 44.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="608.5" y="66" style="fill: #33322E;font-weight:normal;">-player</text>
+<text x="608.5" y="81" style="fill: #33322E;font-weight:normal;">-div</text>
+<text x="608.5" y="96" style="fill: #33322E;font-weight:normal;">-wincounter</text>
+<text x="608.5" y="111" style="fill: #33322E;font-weight:normal;">-healthbar</text>
+<text x="608.5" y="126" style="fill: #33322E;font-weight:normal;">+abilitiesBar</text>
+<text x="608.5" y="141" style="fill: #33322E;font-weight:normal;">+firebolt</text>
+<text x="608.5" y="156" style="fill: #33322E;font-weight:normal;">+superbolt</text>
+<path d="M600.5 165.5 L806.5 165.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="608.5" y="187" style="fill: #33322E;font-weight:normal;">-create()</text>
+<text x="608.5" y="202" style="fill: #33322E;font-weight:normal;">-addAbilitiesBar()</text>
+<text x="608.5" y="217" style="fill: #33322E;font-weight:normal;">-addAbilities()</text>
+<text x="608.5" y="232" style="fill: #33322E;font-weight:normal;">-addFirebolt()</text>
+<text x="608.5" y="247" style="fill: #33322E;font-weight:normal;">+fireboltCooldown()</text>
+<text x="608.5" y="262" style="fill: #33322E;font-weight:normal;">-addSuperbolt()</text>
+<text x="608.5" y="277" style="fill: #33322E;font-weight:normal;">+superboltCooldown()</text>
+<text x="608.5" y="292" style="fill: #33322E;font-weight:normal;">-addHealthbar()</text>
+<text x="608.5" y="307" style="fill: #33322E;font-weight:normal;">+resetUI()</text>
+<text x="608.5" y="322" style="fill: #33322E;font-weight:normal;">+addHearts()</text>
+<text x="608.5" y="337" style="fill: #33322E;font-weight:normal;">+removeHealth()</text>
+<text x="608.5" y="352" style="fill: #33322E;font-weight:normal;">-addWinCounter()</text>
+<rect x="508.5" y="563.5" height="100" width="149" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\projectile.ts.Projectile" xlink:href="dev\projectile.ts"><text x="583" y="585" style="fill: #33322E;text-anchor: middle;">Projectile</text></a>
+<path d="M508.5 594.5 L657.5 594.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<path d="M508.5 602.5 L657.5 602.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="516.5" y="624" style="fill: #33322E;font-weight:normal;">+moveForward()</text>
+<text x="516.5" y="639" style="fill: #33322E;font-weight:normal;">+remove()</text>
+<text x="516.5" y="654" style="fill: #33322E;font-weight:normal;">+create()</text>
+<rect x="603.5" y="864.5" height="138" width="168" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\superbolt.ts.Superbolt" xlink:href="dev\superbolt.ts"><text x="687.5" y="886" style="fill: #33322E;text-anchor: middle;">Superbolt</text></a>
+<path d="M603.5 895.5 L771.5 895.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="611.5" y="917" style="fill: #33322E;font-weight:normal;">+projectileSpeed</text>
+<text x="611.5" y="932" style="fill: #33322E;font-weight:normal;">+position</text>
+<text x="611.5" y="947" style="fill: #33322E;font-weight:normal;">+pName</text>
+<path d="M603.5 956.5 L771.5 956.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="611.5" y="978" style="fill: #33322E;font-weight:normal;">+create()</text>
+<text x="611.5" y="993" style="fill: #33322E;font-weight:normal;">+update()</text>
+<rect x="905.5" y="551.5" height="123" width="168" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\superboltAbility.ts.SuperboltAbility" xlink:href="dev\superboltAbility.ts"><text x="989.5" y="573" style="fill: #33322E;text-anchor: middle;">SuperboltAbility</text></a>
+<path d="M905.5 582.5 L1073.5 582.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="913.5" y="604" style="fill: #33322E;font-weight:normal;">-superbolt</text>
+<text x="913.5" y="619" style="fill: #33322E;font-weight:normal;">-player</text>
+<path d="M905.5 628.5 L1073.5 628.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+<text x="913.5" y="650" style="fill: #33322E;font-weight:normal;">+attack()</text>
+<text x="913.5" y="665" style="fill: #33322E;font-weight:normal;">+update()</text>
+<rect x="846.5" y="172.5" height="31" width="83" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+<a id="dev\ability.ts.Ability" xlink:href="dev\ability.ts"><text x="888" y="194" style="fill: #33322E;text-anchor: middle;">Ability</text></a>
+</svg>

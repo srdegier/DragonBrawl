@@ -1,27 +1,26 @@
 import { Ability } from "./ability.js";
-import { Firebolt } from "./firebolt.js";
-export class FireboltAbility extends Ability {
+import { Superbolt } from "./superbolt.js";
+export class SuperboltAbility extends Ability {
     constructor(player) {
         super();
         this.player = player;
-        this.cooldown = 2;
-        this.currentCooldown = 150;
+        this.cooldown = 10;
+        this.currentCooldown = 600;
     }
     resetCooldown() {
         this.currentCooldown = 0;
     }
     attack() {
         if (this.currentCooldown == 0) {
-            this.player.addProjectile(new Firebolt(this.player.name, this.player.getPosition()));
+            this.player.addProjectile(new Superbolt(this.player.name, this.player.getPosition()));
             this.currentCooldown = (this.cooldown * 60);
-            console.log(this.currentCooldown);
         }
     }
     update() {
         if (this.currentCooldown != 0) {
             this.checkCooldown();
-            this.player.playerUI.fireboltCooldown(this.currentCooldown);
+            this.player.playerUI.superboltCooldown(this.currentCooldown);
         }
     }
 }
-//# sourceMappingURL=fireboltAbility.js.map
+//# sourceMappingURL=superboltAbility.js.map

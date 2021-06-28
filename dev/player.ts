@@ -2,6 +2,8 @@ import { GameObject } from "./gameObject.js"
 import { PlayerUI } from "./playerUI.js"
 import { FireboltAbility } from "./fireboltAbility.js"
 import { Projectile } from "./projectile.js"
+import { SuperboltAbility } from "./superboltAbility.js"
+import { Arena } from "./arena.js"
 
 export class Player extends GameObject { 
 
@@ -10,10 +12,13 @@ export class Player extends GameObject {
     private _wins: number = 0
     dead: boolean
     // ui
+
+    arena: Arena
     playerUI: PlayerUI
 
     //abilities
     fireboltAbility: FireboltAbility
+    superboltAbility: SuperboltAbility
 
     // controls
     controlUp: string
@@ -22,9 +27,12 @@ export class Player extends GameObject {
     controlRight: string
     // attack controls
     controlFirebolt: string
+    controlSuperbolt: string
 
+    // object pool
     projecticles: Projectile[] = []
-
+    
+    // object pool
     addProjectile(projectile: Projectile) : void {
         this.projecticles.push(projectile)
         console.log(this.projecticles);
@@ -33,6 +41,13 @@ export class Player extends GameObject {
     removeProjectile(index: number) : void {
         // remove instance from array
         this.projecticles.splice(index, 1)
+    }
+
+    removeProjectiles() : void {
+        for (const [index, projectile] of this.projecticles.entries()) {
+            projectile.remove();
+            this.projecticles.splice(index, 1)
+        }
     }
 
     constructor(name: string, x: number, y: number, control: string[]) {
@@ -46,6 +61,7 @@ export class Player extends GameObject {
         this.controlRight = control[3]
 
         this.controlFirebolt = control[4]
+        this.controlSuperbolt = control[5]
 
         this.create()
     }
@@ -72,7 +88,10 @@ export class Player extends GameObject {
         // recreate the UI with corresponding new values of player
         this.playerUI.resetUI()
         // empty projectiles make function for this if time
-        //this.projecticles = []
+        this.removeProjectiles()
+        // reset cooldowns
+        this.superboltAbility.resetCooldown()
+        this.fireboltAbility.resetCooldown()
         // respawn the player
         this.spawn()
     }
@@ -120,22 +139,21 @@ export class Player extends GameObject {
 
         // create abilities
         this.fireboltAbility = new FireboltAbility(this)
+
+        this.superboltAbility = new SuperboltAbility(this)
+        
     }
 
     update() : void {
 
-        this.y += this.verticalSpeed
-        this.x += this.horizontalSpeed
-        // Draw the dragon on the right coordinate (x, y)
-        // if(this.isInViewport()) {
-        //     this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
-        // } else {
-        //     //fix this
-        // }
-        this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
-
-        if (this.name == "p2") {
-            this.div.style.transform += "scaleX(-1)"
+        if (this.checkOutOfMap()) {
+            this.y += this.verticalSpeed
+            this.x += this.horizontalSpeed
+            this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
+            // console.log(document.documentElement.clientWidth / 2)
+            if (this.name == "p2") {
+                this.div.style.transform += "scaleX(-1)"
+            }
         }
 
         //update projectiles of player
@@ -148,12 +166,15 @@ export class Player extends GameObject {
                 this.removeProjectile(index)
             }
         }
+        // check cooldown ability
+        this.fireboltAbility.update()
 
+        this.superboltAbility.update()
     }
 
     onKeyDown(e: KeyboardEvent): void {
         // Check if the key in the event (e.key) matches the desired input
-        switch (e.key) {
+        switch (e.code) {
             // When the "ArrowUp" key is pressed
             case this.controlUp:
                 // Give the vertical speed a negative value
@@ -174,24 +195,30 @@ export class Player extends GameObject {
                 // Give the vertical speed a positive value
                 this.horizontalSpeed = -5
                 break
-            // When the "ArrowRight" key is pressed
+            // When the "firebolt" key is pressed
             case this.controlFirebolt:
                 // go to fireboltAbility class and do attack
                 this.fireboltAbility.attack()
                 break
+            // When the "superbolt" key is pressed
+            case this.controlSuperbolt:
+                // go to fireboltAbility class and do attack
+                this.superboltAbility.attack()
+                break
         }
+        
     }
 
     onKeyUp(e: KeyboardEvent): void {
         //TODO: add fix to stop propagation in non active class
         
         // Check if ArrowUp or ArrowDown key has been released
-        if(e.key == this.controlUp || e.key == this.controlDown) {
+        if(e.code == this.controlUp || e.code == this.controlDown) {
             // Make the vertical speed 0
             this.verticalSpeed = 0
         }
 
-        if(e.key == this.controlRight || e.key == this.controlLeft) {
+        if(e.code == this.controlRight || e.code == this.controlLeft) {
             // Make the vertical speed 0
             this.horizontalSpeed = 0
         }

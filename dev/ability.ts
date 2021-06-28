@@ -1,10 +1,10 @@
 export class Ability {
-    constructor() {
-        this.test()
-    }
 
-    private test() {
-        console.log('created ability bar')
+    protected cooldown : number = 0 
+    protected currentCooldown : number = 0
+
+    protected checkCooldown() {
+        this.currentCooldown--
+        Math.floor(this.currentCooldown / 60)
     }
-    // do stuff like cooldown and sht
 }

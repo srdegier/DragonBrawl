@@ -6,7 +6,11 @@ export class Arena {
     protected div : HTMLElement
     protected player: Player[] = []
     private doomClock:number = 3600
+    private timerElement: HTMLElement
+    private winMessage: HTMLElement
+    //private doomClock:number = 500
     private _round: number = 1
+    pause: boolean = true
     constructor() {
         this.create()
     }
@@ -20,15 +24,17 @@ export class Arena {
         // border
         this.div = document.createElement("border")
         document.body.appendChild(this.div)
-
-        // timer
-        this.div = document.createElement("h1")
-
-        this.div.classList.add("timer");
-
-        document.body.appendChild(this.div)
         
-        let controls = [["w","s", "a", "d", "f"], ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"]]
+        // timer
+        this.timerElement = document.createElement("h1")
+        this.timerElement.classList.add("timer");
+        document.body.appendChild(this.timerElement)
+
+        // win message 
+        this.winMessage = document.createElement("win-message")
+        document.body.appendChild(this.winMessage)
+        
+        let controls = [["KeyW","KeyS", "KeyA", "KeyD", "KeyF", "ShiftLeft"], ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter", "ShiftRight"]]
         // insert 2 players
         this.player.push(new Player("p1", 100, 400, controls[0]))
         this.player.push(new Player("p2", 1600, 400, controls[1]))
@@ -45,8 +51,19 @@ export class Arena {
 
             // determine new round and respawn do in function later
             if(player.healthPoint == 0) {
-                this.round = 1
                 this.player[enemyP].wins = 1
+                // check win message
+                this.checkWin()
+                this.round = 1
+                // check gameover
+                if (this.player[enemyP].wins == 3) {
+                    this.pause = true;
+                    this.winMessage.classList.add('visible')
+                    this.winMessage.innerText = `${this.player[enemyP].name} wins!`;
+                    
+                    // restart game
+                    setTimeout(function(){ location.reload(); }, 3000);                    
+                }
                 console.log("Round " + this.round);
                 for (const player of this.player) {
                     player.respawn()
@@ -66,7 +83,7 @@ export class Arena {
             }
         }
         // timer
-        // this.timer();
+        this.timer();
     }
 
     public set round (value : number) {
@@ -80,11 +97,38 @@ export class Arena {
     private timer() {
         this.doomClock--
         let secondsLeft = Math.floor(this.doomClock / 60)
-        document.querySelector('.timer')
-        // console.log(`Only ${secondsLeft} seconds left!`)
+        this.timerElement!.innerText = String(secondsLeft)
         if(this.doomClock <= 0) {
-            console.log("Doomsday has come!")
+            // times up check win
+            this.checkWin()
         }
+    }
+
+    private checkWin() {
+        if (this.player[0].healthPoint == this.player[1].healthPoint) {
+            this.winMessage.classList.add('visible')
+            this.winMessage!.innerText = `draw`
+            for (const player of this.player) {
+                player.respawn()
+            } 
+        } else if (this.player[0].healthPoint > this.player[1].healthPoint) {
+            this.winMessage.classList.add('visible')
+            this.winMessage!.innerText = `p1 wins round ${this.round}`
+            this.player[1].healthPoint = 0 
+        } else {
+            this.winMessage.classList.add('visible')
+            this.winMessage!.innerText = `p2 wins round ${this.round}` 
+            this.player[0].healthPoint = 0 
+        }
+        // pause the game
+        this.pause = false;
+
+        setTimeout(() => {
+            this.doomClock = 3600
+            this.winMessage!.innerText = ''
+            this.winMessage.classList.remove('visible')
+            this.pause = true;
+        }, 3000);
     }
 
     checkCollision(a: ClientRect, b: ClientRect) {
@@ -92,5 +136,5 @@ export class Arena {
             b.left <= a.right &&
             a.top <= b.bottom &&
             b.top <= a.bottom)
-     }
+    }
 }

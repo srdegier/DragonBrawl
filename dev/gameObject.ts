@@ -32,7 +32,7 @@ export class GameObject {
         );
     }
 
-    setDirection(pName: string) : void {
+    private setDirection(pName: string) : void {
         const direction = (pName == 'p2') ? "-" : "+";
         this.div.style.transform += `scaleX(${direction}1)`
         this.lookDirection = direction
@@ -47,5 +47,24 @@ export class GameObject {
     getPosition() : any {
         return {x: this.x, y: this.y};
     }
+
+    checkOutOfMap(){
+        let rect = this.div.getBoundingClientRect()
+        rect.x += this.horizontalSpeed
+        rect.y += this.verticalSpeed
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    // checkCollision(a: ClientRect, b: ClientRect) {
+    //     return (a.left <= b.right &&
+    //         b.left <= a.right &&
+    //         a.top <= b.bottom &&
+    //         b.top <= a.bottom)
+    // }
     
 }

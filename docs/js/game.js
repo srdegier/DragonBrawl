@@ -1,12 +1,14 @@
 import { Arena } from "./arena.js";
-class Game {
+export class Game {
     constructor() {
         console.log("Game was created!");
         this.arena = new Arena();
         this.gameLoop();
     }
     gameLoop() {
-        this.arena.update();
+        if (this.arena.pause === true) {
+            this.arena.update();
+        }
         requestAnimationFrame(() => this.gameLoop());
     }
 }

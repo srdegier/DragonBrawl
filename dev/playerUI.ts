@@ -8,6 +8,7 @@ export class PlayerUI {
     private healthbar : HTMLElement
     public abilitiesBar : HTMLElement
     public firebolt : HTMLElement
+    public superbolt : HTMLElement
 
     constructor(player: Player) {
         this.player = player
@@ -44,10 +45,49 @@ export class PlayerUI {
     }
 
     private addAbilities() : void {
+        this.addFirebolt()
+        this.addSuperbolt()
+    }
+
+    private addFirebolt() {
+        
         this.firebolt = document.createElement('firebolt-slot')
+        this.firebolt.classList.add('circle');
+
+        let control = document.createElement('span')
+        control.classList.add('control-text')
+        control.appendChild(document.createTextNode(this.player.controlFirebolt));
+
+        let cooldown = document.createElement('span')
+        cooldown.classList.add('cooldown')
+
         this.abilitiesBar.appendChild(this.firebolt)
-        // document.createElement('superbolt-slot')
-        // document.createElement('shield-slot')
+        this.firebolt.appendChild(cooldown)
+        this.firebolt.appendChild(control)
+    }
+
+    public fireboltCooldown(cooldown: number) {
+        this.firebolt!.firstElementChild!.textContent = String(cooldown)
+    }
+
+    private addSuperbolt() {
+        this.superbolt = document.createElement('superbolt-slot')
+        this.superbolt.classList.add('circle');
+
+        let control = document.createElement('span')
+        control.classList.add('control-text')
+        control.appendChild(document.createTextNode(this.player.controlSuperbolt));
+
+        let cooldown = document.createElement('span')
+        cooldown.classList.add('cooldown')
+
+        this.abilitiesBar.appendChild(this.superbolt)
+        this.superbolt.appendChild(cooldown)
+        this.superbolt.appendChild(control)
+    }
+
+    public superboltCooldown(cooldown: number) {
+        this.superbolt!.firstElementChild!.textContent = String(cooldown)
     }
 
     private addHealthbar() {
@@ -86,13 +126,5 @@ export class PlayerUI {
         
         // append to player interface
         this.div.appendChild(this.wincounter)
-    }
-
-    // update() {
-    //     // update health
-    //     console.log(this.player.healthPoint)
-    //     // update won rounds
-    //     console.log(this.player.wins)
-    // }
-    
+    }    
 }

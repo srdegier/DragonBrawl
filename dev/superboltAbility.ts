@@ -1,18 +1,19 @@
 import { Ability} from "./ability.js"
-import { Firebolt } from "./firebolt.js"
 import { Player } from "./player.js"
 import { PlayerUI } from "./playerUI.js"
+import { Superbolt } from "./superbolt.js"
 
-export class FireboltAbility extends Ability {
+export class SuperboltAbility extends Ability {
 
-    private firebolt : Firebolt 
+    private superbolt : Superbolt 
     private player : Player // determine which player
 
     constructor(player: Player) {
         super()
         this.player = player
-        this.cooldown = 2
-        this.currentCooldown = 150
+        this.cooldown = 10
+        this.currentCooldown = 600
+        // this.create()
     }
 
     resetCooldown() {
@@ -21,16 +22,15 @@ export class FireboltAbility extends Ability {
 
     attack() : void {
         if (this.currentCooldown == 0) {
-            this.player.addProjectile(new Firebolt(this.player.name, this.player.getPosition()))
+            this.player.addProjectile(new Superbolt(this.player.name, this.player.getPosition()))
             this.currentCooldown = (this.cooldown * 60)
-            console.log(this.currentCooldown)
         }
     }
 
     update() : void {
         if (this.currentCooldown != 0) {
             this.checkCooldown()
-            this.player.playerUI.fireboltCooldown(this.currentCooldown)
+            this.player.playerUI.superboltCooldown(this.currentCooldown)
         }
     }
 

@@ -1,6 +1,7 @@
 import { GameObject } from "./gameObject.js";
 import { PlayerUI } from "./playerUI.js";
 import { FireboltAbility } from "./fireboltAbility.js";
+import { SuperboltAbility } from "./superboltAbility.js";
 export class Player extends GameObject {
     constructor(name, x, y, control) {
         super(x, y, 'player', name);
@@ -13,6 +14,7 @@ export class Player extends GameObject {
         this.controlLeft = control[2];
         this.controlRight = control[3];
         this.controlFirebolt = control[4];
+        this.controlSuperbolt = control[5];
         this.create();
     }
     addProjectile(projectile) {
@@ -21,6 +23,12 @@ export class Player extends GameObject {
     }
     removeProjectile(index) {
         this.projecticles.splice(index, 1);
+    }
+    removeProjectiles() {
+        for (const [index, projectile] of this.projecticles.entries()) {
+            projectile.remove();
+            this.projecticles.splice(index, 1);
+        }
     }
     set healthPoint(newHP) {
         this._healthPoint = newHP;
@@ -35,6 +43,9 @@ export class Player extends GameObject {
     respawn() {
         this.healthPoint = 4;
         this.playerUI.resetUI();
+        this.removeProjectiles();
+        this.superboltAbility.resetCooldown();
+        this.fireboltAbility.resetCooldown();
         this.spawn();
     }
     set wins(value) {
@@ -64,13 +75,16 @@ export class Player extends GameObject {
         this.spawn();
         this.playerUI = new PlayerUI(this);
         this.fireboltAbility = new FireboltAbility(this);
+        this.superboltAbility = new SuperboltAbility(this);
     }
     update() {
-        this.y += this.verticalSpeed;
-        this.x += this.horizontalSpeed;
-        this.div.style.transform = `translate(${this.x}px, ${this.y}px)`;
-        if (this.name == "p2") {
-            this.div.style.transform += "scaleX(-1)";
+        if (this.checkOutOfMap()) {
+            this.y += this.verticalSpeed;
+            this.x += this.horizontalSpeed;
+            this.div.style.transform = `translate(${this.x}px, ${this.y}px)`;
+            if (this.name == "p2") {
+                this.div.style.transform += "scaleX(-1)";
+            }
         }
         for (const [index, projectile] of this.projecticles.entries()) {
             projectile.moveForward();
@@ -79,9 +93,11 @@ export class Player extends GameObject {
                 this.removeProjectile(index);
             }
         }
+        this.fireboltAbility.update();
+        this.superboltAbility.update();
     }
     onKeyDown(e) {
-        switch (e.key) {
+        switch (e.code) {
             case this.controlUp:
                 this.verticalSpeed = -5;
                 break;
@@ -97,13 +113,16 @@ export class Player extends GameObject {
             case this.controlFirebolt:
                 this.fireboltAbility.attack();
                 break;
+            case this.controlSuperbolt:
+                this.superboltAbility.attack();
+                break;
         }
     }
     onKeyUp(e) {
-        if (e.key == this.controlUp || e.key == this.controlDown) {
+        if (e.code == this.controlUp || e.code == this.controlDown) {
             this.verticalSpeed = 0;
         }
-        if (e.key == this.controlRight || e.key == this.controlLeft) {
+        if (e.code == this.controlRight || e.code == this.controlLeft) {
             this.horizontalSpeed = 0;
         }
     }

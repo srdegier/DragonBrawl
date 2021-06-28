@@ -24,8 +24,38 @@ export class PlayerUI {
         this.addAbilities();
     }
     addAbilities() {
+        this.addFirebolt();
+        this.addSuperbolt();
+    }
+    addFirebolt() {
         this.firebolt = document.createElement('firebolt-slot');
+        this.firebolt.classList.add('circle');
+        let control = document.createElement('span');
+        control.classList.add('control-text');
+        control.appendChild(document.createTextNode(this.player.controlFirebolt));
+        let cooldown = document.createElement('span');
+        cooldown.classList.add('cooldown');
         this.abilitiesBar.appendChild(this.firebolt);
+        this.firebolt.appendChild(cooldown);
+        this.firebolt.appendChild(control);
+    }
+    fireboltCooldown(cooldown) {
+        this.firebolt.firstElementChild.textContent = String(cooldown);
+    }
+    addSuperbolt() {
+        this.superbolt = document.createElement('superbolt-slot');
+        this.superbolt.classList.add('circle');
+        let control = document.createElement('span');
+        control.classList.add('control-text');
+        control.appendChild(document.createTextNode(this.player.controlSuperbolt));
+        let cooldown = document.createElement('span');
+        cooldown.classList.add('cooldown');
+        this.abilitiesBar.appendChild(this.superbolt);
+        this.superbolt.appendChild(cooldown);
+        this.superbolt.appendChild(control);
+    }
+    superboltCooldown(cooldown) {
+        this.superbolt.firstElementChild.textContent = String(cooldown);
     }
     addHealthbar() {
         this.healthbar = document.createElement('healthbar');

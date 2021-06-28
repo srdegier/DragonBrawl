@@ -13,7 +13,5 @@ export class Projectile extends GameObject {
     remove() {
         this.div.remove();
     }
-    create() {
-    }
 }
 //# sourceMappingURL=projectile.js.map

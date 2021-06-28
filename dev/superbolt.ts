@@ -1,14 +1,14 @@
 import { Projectile } from "./projectile.js"
 
-export class Firebolt extends Projectile{
+export class Superbolt extends Projectile{
 
-    projectileSpeed: number = 10
+    projectileSpeed: number = 20
 
     position: any
     pName: string
 
     constructor(pName: string, position: any) {
-        super(position.x, position.y, 'firebolt', pName)
+        super(position.x, position.y, 'superbolt', pName)
         // create html firebolt
         this.position = position
         this.pName = pName
@@ -16,7 +16,7 @@ export class Firebolt extends Projectile{
 
     }
     create() : void {
-
+        console.log('Superbolt added');
         // set projectile speed
         this.horizontalSpeed =  this.projectileSpeed
         //correct the placement of the ability
@@ -24,11 +24,18 @@ export class Firebolt extends Projectile{
             this.x += -10
             this.y += 50
             this.div.style.transform = `translate(${this.x}px, ${this.y}px)` // put back 2 normal later.
+            // this.div.style.transform += "scaleX(-1)"
         } else {
             this.x += 90
             this.y += 50
             this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
         }
         
+    }
+
+    //update
+    update() : void {
+        // update projectile
+        // this.moveForward()
     }
 }

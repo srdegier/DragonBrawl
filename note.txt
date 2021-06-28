@@ -1,0 +1,1 @@
+tplant --input dev/**/*.ts --compositions --output uml.svg

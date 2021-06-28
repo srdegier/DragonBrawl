@@ -1,9 +1,11 @@
 export class Ability {
     constructor() {
-        this.test();
+        this.cooldown = 0;
+        this.currentCooldown = 0;
     }
-    test() {
-        console.log('created ability bar');
+    checkCooldown() {
+        this.currentCooldown--;
+        Math.floor(this.currentCooldown / 60);
     }
 }
 //# sourceMappingURL=ability.js.map

@@ -1,0 +1,118 @@
+@startuml
+class Ability {
+    #cooldown: number
+    #currentCooldown: number
+    #checkCooldown(): void
+}
+class GameObject {
+    #div: HTMLElement
+    #x: number
+    #y: number
+    #verticalSpeed: number
+    #horizontalSpeed: number
+    #lookDirection: string
+    +isInViewport(): boolean
+    +setDirection(pName: string): void
+    +getClientRect(): DOMRect
+    +getPosition(): any
+}
+class PlayerUI {
+    -player: Player
+    -div: HTMLElement
+    -wincounter: HTMLElement
+    -healthbar: HTMLElement
+    +abilitiesBar: HTMLElement
+    +firebolt: HTMLElement
+    +superbolt: HTMLElement
+    -create(): void
+    -addAbilitiesBar(): void
+    -addAbilities(): void
+    -addFirebolt(): void
+    +fireboltCooldown(cooldown: number): void
+    -addSuperbolt(): void
+    +superboltCooldown(cooldown: number): void
+    -addHealthbar(): void
+    +resetUI(): void
+    +addHearts(): void
+    +removeHealth(): void
+    -addWinCounter(): void
+}
+class Projectile extends GameObject {
+    +moveForward(): void
+    +remove(): void
+    +create(): void
+}
+class Firebolt extends Projectile {
+    +projectileSpeed: number
+    +position: any
+    +pName: string
+    +create(): void
+    +update(): void
+}
+class FireboltAbility extends Ability {
+    -firebolt: Firebolt
+    -player: Player
+    -create(): void
+    +attack(): void
+    +update(): void
+}
+class Superbolt extends Projectile {
+    +projectileSpeed: number
+    +position: any
+    +pName: string
+    +create(): void
+    +update(): void
+}
+class SuperboltAbility extends Ability {
+    -superbolt: Superbolt
+    -player: Player
+    +attack(): void
+    +update(): void
+}
+class Player extends GameObject {
+    +name: string
+    -_healthPoint: number
+    -_wins: number
+    +dead: boolean
+    +playerUI: PlayerUI
+    +fireboltAbility: FireboltAbility
+    +superboltAbility: SuperboltAbility
+    +controlUp: string
+    +controlDown: string
+    +controlLeft: string
+    +controlRight: string
+    +controlFirebolt: string
+    +controlSuperbolt: string
+    +projecticles: Projectile[]
+    +addProjectile(projectile: Projectile): void
+    +removeProjectile(index: number): void
+    +healthPoint: number
+    +healthPoint: number
+    +hit(): void
+    +respawn(): void
+    +wins: number
+    +wins: number
+    +getWin(): number
+    -spawn(): void
+    -create(): void
+    +update(): void
+    +onKeyDown(e: KeyboardEvent): void
+    +onKeyUp(e: KeyboardEvent): void
+}
+class Arena {
+    #div: HTMLElement
+    #player: Player[]
+    -doomClock: number
+    -_round: number
+    +create(): void
+    +update(): void
+    +round: number
+    +round: number
+    -timer(): void
+    +checkCollision(a: ClientRect, b: ClientRect): boolean
+}
+class Game {
+    +arena: Arena
+    +gameLoop(): void
+}
+@enduml

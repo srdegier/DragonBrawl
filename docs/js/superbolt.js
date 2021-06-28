@@ -1,13 +1,14 @@
 import { Projectile } from "./projectile.js";
-export class Firebolt extends Projectile {
+export class Superbolt extends Projectile {
     constructor(pName, position) {
-        super(position.x, position.y, 'firebolt', pName);
-        this.projectileSpeed = 10;
+        super(position.x, position.y, 'superbolt', pName);
+        this.projectileSpeed = 20;
         this.position = position;
         this.pName = pName;
         this.create();
     }
     create() {
+        console.log('Superbolt added');
         this.horizontalSpeed = this.projectileSpeed;
         if (this.pName == "p2") {
             this.x += -10;
@@ -20,5 +21,7 @@ export class Firebolt extends Projectile {
             this.div.style.transform = `translate(${this.x}px, ${this.y}px)`;
         }
     }
+    update() {
+    }
 }
-//# sourceMappingURL=firebolt.js.map
+//# sourceMappingURL=superbolt.js.map

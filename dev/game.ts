@@ -1,8 +1,8 @@
 import { Arena } from "./arena.js"
 
-class Game {
+export class Game {
 
-    arena: Arena
+    private arena: Arena
     
     constructor() {
         console.log("Game was created!")
@@ -11,12 +11,10 @@ class Game {
         this.gameLoop()
     }
 
-    gameLoop() {
-        //TODO: update arena
-        this.arena.update();
-        // if(this.arena.round == 5) {
-        //     console.log('game over');
-        // }
+    private gameLoop() {
+        if (this.arena.pause === true) {
+            this.arena.update();
+        }
         requestAnimationFrame(() => this.gameLoop())
     }
 } 
